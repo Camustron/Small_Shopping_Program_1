@@ -108,3 +108,5 @@ Preço total: R${total:.2f}
 Você comprou {produto_quantidade} produtos.
 ''')
 print('OBRIGADO PELA PREFERÊNCIA! VOLTE SEMPRE!')
+
+#created by Camustron
