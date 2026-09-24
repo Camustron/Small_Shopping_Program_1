@@ -1,0 +1,110 @@
+# programa básico de simulação de mercado
+from time import sleep
+
+print('*=' * 12)
+print('{:=^24}'.format('MERCADO DO DADOROM'))
+print('*=' * 12)
+
+produtos = []
+total = 0
+produto_quantidade = 0
+
+print('Hora de fazer as compras')
+while True:
+    produto = ''
+    while produto == '':
+        produto = str(input('Qual produto você deseja comprar? ')).strip().upper()
+        produtos.append(produto)
+        lista_filtrada = list(filter(None, produtos))
+    preco = -1
+    while preco < 0:
+        try:
+            preco = float(input('Digite o preço do produto: R$'))
+            if preco < 0:
+                print('Não pode ser um valor NEGATIVO!')
+            else:
+                total += preco
+                break
+        except ValueError:
+            print('Você deve definir o preço do produto')
+
+    while True:
+        cont = str(input('Deseja continuar as compras? [S/N]')).strip().upper() # perguntar se quer continuar as compras ou não
+        cont = cont[0]
+        if cont == "S":
+            break
+        if cont == "N":
+            break
+    if cont in 'N':
+        break
+# forma de pagamento
+print('''
+Forma de pagamento
+[ 1 ] DINHEIRO
+[ 2 ] CARTÃO 2X
+[ 3 ] CARTÃO 3X OU MAIS 
+''')
+total_parcelado = total
+vezes = 0
+while True:
+    while True:
+        try:
+            forma = int(input('Escolha a forma de pagamento das opções acima: '))
+            if forma in [1, 2, 3]:
+                break
+        except ValueError:
+            print('Escolha uma das opções apresentadas!')
+
+    if forma == 1:
+        break
+    elif forma == 2:
+        total_parcelado /= 2
+        break
+    # condição para três parcelas ou mais
+    elif forma == 3:
+        while True:
+            try:
+                print('Número mínimo de parcelas nesta opção: 3'
+                      '\nNúmero máximo de parcelas: 5')
+                vezes = int(input('Em quantas vezes irá parcelar sua comprar? '))
+                if vezes in [3, 4, 5]:
+                    break
+            except ValueError:
+                print("Escolha um valor!")
+        if vezes == 3:
+            total_parcelado /= 3
+            break
+        elif vezes == 4:
+            total_parcelado /= 4
+            break
+        elif vezes == 5:
+            total_parcelado /= 5
+            break
+    break
+
+print('PROCESSANDO SUA COMPRA...')
+sleep(3)
+
+if forma == 1:
+    print('Você escolheu: DINHEIRO como forma de pagamento.')
+elif forma == 2:
+    print('Você escolheu 2x no cartão.')
+    print(f'Você pagará 2x de R${total_parcelado:.2f}')
+if vezes == 3:
+    print('Você escolheu 3x no cartão.')
+    print(f'Você pagará 3x de R${total_parcelado:.2f}')
+elif vezes == 4:
+    print('Você escolheu 4x no cartão.')
+    print(f'Você pagará 4x de R${total_parcelado:.2f}')
+elif vezes == 5:
+    print('Você escolheu 5x no cartão.')
+    print(f'Você pagará 5x de R${total_parcelado:.2f}')
+
+
+produto_quantidade = len(lista_filtrada)
+print(f'''
+Você comprou:{lista_filtrada}
+Preço total: R${total:.2f}
+Você comprou {produto_quantidade} produtos.
+''')
+print('OBRIGADO PELA PREFERÊNCIA! VOLTE SEMPRE!')
